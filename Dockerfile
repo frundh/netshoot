@@ -33,6 +33,7 @@ RUN set -ex \
     netcat-openbsd \
     nftables \
     ngrep \
+    nano \
     nmap \
     nmap-nping \
     openssl \
@@ -42,6 +43,7 @@ RUN set -ex \
     scapy \
     socat \
     strace \
+    tar \
     tcpdump \
     tcptraceroute \
     util-linux \
@@ -52,6 +54,9 @@ RUN mv /usr/sbin/tcpdump /usr/bin/tcpdump
 
 # Installing ctop - top-like container monitor
 RUN wget https://github.com/bcicen/ctop/releases/download/v0.7.1/ctop-0.7.1-linux-amd64 -O /usr/local/bin/ctop && chmod +x /usr/local/bin/ctop
+
+# Installing gRPCurl
+RUN wget -qO- https://github.com/fullstorydev/grpcurl/releases/download/v1.2.1/grpcurl_1.2.1_linux_x86_64.tar.gz | tar xzvf - -C /usr/local/bin/ grpcurl && chmod +x /usr/local/bin/grpcurl
 
 # Installing calicoctl
 ARG CALICOCTL_VERSION=v3.3.1
