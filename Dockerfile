@@ -1,56 +1,53 @@
-FROM alpine:3.8
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0
 
-RUN set -ex \
-    && echo "http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
-    && echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-    && apk update \
-    && apk upgrade \
-    && apk add --no-cache \
+RUN set -ex; \
+    update-ca-certificates; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
     apache2-utils \
     bash \
-    bind-tools \
     bird \
     bridge-utils \
-    busybox-extras \
-    conntrack-tools \
     curl \
     dhcping \
-    drill \
+    dnsutils \
     ethtool \
     file\
     fping \
+    git \
     iftop \
     iperf \
     iproute2 \
     iptables \
     iptraf-ng \
-    iputils \
+    iputils-arping \
+    iputils-clockdiff \
+    iputils-ping \
+    iputils-tracepath \    
     ipvsadm \
-    libc6-compat \
-    liboping \
+    ldnsutils \
     mtr \
-    net-snmp-tools \
+    net-tools \
     netcat-openbsd \
     nftables \
     ngrep \
     nano \
     nmap \
-    nmap-nping \
     openssl \
-    py-crypto \
-    py2-virtualenv \
     python2 \
+    ranger \
     scapy \
+    snmp \
     socat \
     strace \
     tar \
     tcpdump \
     tcptraceroute \
+    telnet \
     util-linux \
-    vim
-
-# apparmor issue #14140
-RUN mv /usr/sbin/tcpdump /usr/bin/tcpdump
+    vim; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 # Installing ctop - top-like container monitor
 RUN wget https://github.com/bcicen/ctop/releases/download/v0.7.1/ctop-0.7.1-linux-amd64 -O /usr/local/bin/ctop && chmod +x /usr/local/bin/ctop
