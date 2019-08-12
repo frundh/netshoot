@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM mcr.microsoft.com/powershell:6.2.2-alpine-3.8
 
 RUN set -ex \
     && echo "http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
