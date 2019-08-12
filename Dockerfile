@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine
 
 RUN set -ex \
     && echo "http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
@@ -19,6 +19,7 @@ RUN set -ex \
     ethtool \
     file\
     fping \
+    git \
     iftop \
     iperf \
     iproute2 \
@@ -40,6 +41,7 @@ RUN set -ex \
     py-crypto \
     py2-virtualenv \
     python2 \
+    ranger \
     scapy \
     socat \
     strace \
