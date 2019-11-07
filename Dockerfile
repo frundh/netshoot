@@ -1,3 +1,7 @@
+FROM golang AS build
+ENV GOPATH=/go
+RUN go get -u github.com/gcla/termshark/cmd/termshark
+
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine
 
 RUN set -ex \
@@ -28,6 +32,7 @@ RUN set -ex \
     iptraf-ng \
     iputils \
     ipvsadm \
+    jq \
     libc6-compat \
     liboping \
     mtr \
@@ -42,13 +47,13 @@ RUN set -ex \
     py-crypto \
     py2-virtualenv \
     python2 \
-    ranger \
     scapy \
     socat \
     strace \
     tar \
     tcpdump \
     tcptraceroute \
+    tshark \
     util-linux \
     vim
 
@@ -61,9 +66,18 @@ RUN wget https://github.com/bcicen/ctop/releases/download/v0.7.1/ctop-0.7.1-linu
 # Installing gRPCurl
 RUN wget -qO- https://github.com/fullstorydev/grpcurl/releases/download/v1.2.1/grpcurl_1.2.1_linux_x86_64.tar.gz | tar xzvf - -C /usr/local/bin/ grpcurl && chmod +x /usr/local/bin/grpcurl
 
+# Add termshark
+COPY --from=build /go/bin/termshark /usr/local/bin/termshark
+
 # Installing calicoctl
 ARG CALICOCTL_VERSION=v3.3.1
 RUN wget https://github.com/projectcalico/calicoctl/releases/download/${CALICOCTL_VERSION}/calicoctl && chmod +x calicoctl && mv calicoctl /usr/local/bin
+
+# Install Ranger FM
+RUN pip install ranger-fm
+
+# Netgen
+ADD netgen.sh /usr/local/bin/netgen
 
 # Settings
 ADD motd /etc/motd
