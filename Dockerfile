@@ -23,6 +23,7 @@ RUN set -ex \
     iftop \
     iperf \
     iproute2 \
+    ipset \
     iptables \
     iptraf-ng \
     iputils \
@@ -63,9 +64,6 @@ RUN wget -qO- https://github.com/fullstorydev/grpcurl/releases/download/v1.2.1/g
 # Installing calicoctl
 ARG CALICOCTL_VERSION=v3.3.1
 RUN wget https://github.com/projectcalico/calicoctl/releases/download/${CALICOCTL_VERSION}/calicoctl && chmod +x calicoctl && mv calicoctl /usr/local/bin
-
-# Netgen
-ADD netgen.sh /usr/local/bin/netgen
 
 # Settings
 ADD motd /etc/motd
